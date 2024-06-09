@@ -80,7 +80,8 @@ class FirebaseItemDataSource {
         int userBalance = user.balance ?? 0;
 
         if (userBalance >= totalPrice) {
-          await itemsCollection.doc(item.id).update(item
+          await itemsCollection.doc(item.id).update(
+              item.copyWith(quantity: item.quantity - quantity)
               .toEntity(itemId, item.sellerId!, item.sellerName!,
               item.sellerEmail!, item.sellerAddress!, item.sellerImage)
               .toDocument());

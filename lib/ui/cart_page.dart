@@ -82,6 +82,9 @@ class _CartPageState extends State<CartPage> {
       await Future.delayed(const Duration(milliseconds: 100));
       _totalCartPriceRefresh();
     }
+    //if (item.quantity == 1) {
+      //_deleteItem(item.id!);
+    //}
   }
 
   Future<void> _deleteItem(String itemId) async {
