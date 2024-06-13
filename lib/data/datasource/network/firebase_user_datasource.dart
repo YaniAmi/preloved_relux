@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kopma/data/model/user/user_entity.dart';
-import 'package:kopma/data/model/user/user_model.dart';
+import 'package:prelovedrelux/data/model/user/user_entity.dart';
+import 'package:prelovedrelux/data/model/user/user_model.dart';
 import '../../../di/service_locator.dart';
 import '../shared_preferences_service.dart';
 import '../user_repository.dart';
@@ -27,8 +27,11 @@ class FirebaseUserDataSource implements UserRepository {
           .doc(myUserId)
           .get()
           .whenComplete(() => {
-        if(sharedPrefService.uid.isEmpty) sharedPrefService.uid = myUserId
-      }).then((value) => UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
+                if (sharedPrefService.uid.isEmpty)
+                  sharedPrefService.uid = myUserId
+              })
+          .then((value) =>
+              UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
     } catch (e) {
       log(e.toString());
       rethrow;

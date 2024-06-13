@@ -2,8 +2,8 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kopma/bloc/detail_item_bloc/detail_item_bloc.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/bloc/detail_item_bloc/detail_item_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 
 import 'checkout_page.dart';
 
@@ -37,17 +37,26 @@ class _DetailItemPageState extends State<DetailItemPage> {
                 context: context,
                 title: "Error",
                 message: 'This item is already in your cart!');
-            context.read<DetailItemBloc>().add(GetDetailItem(itemId: widget.idItem));
+            context
+                .read<DetailItemBloc>()
+                .add(GetDetailItem(itemId: widget.idItem));
           } else if (state is AddItemToCartSuccess) {
             showOkAlertDialog(
                 context: context,
                 title: "Success",
-                message: "Nailed it! ${state.item?.name} is chilling in your cart.");
-            context.read<DetailItemBloc>().add(GetDetailItem(itemId: widget.idItem));
+                message:
+                    "Nailed it! ${state.item?.name} is chilling in your cart.");
+            context
+                .read<DetailItemBloc>()
+                .add(GetDetailItem(itemId: widget.idItem));
           } else if (state is BuyItemSuccess) {
-            context.read<DetailItemBloc>().add(GetDetailItem(itemId: widget.idItem));
+            context
+                .read<DetailItemBloc>()
+                .add(GetDetailItem(itemId: widget.idItem));
           } else if (state is BuyItemFailure) {
-            context.read<DetailItemBloc>().add(GetDetailItem(itemId: widget.idItem));
+            context
+                .read<DetailItemBloc>()
+                .add(GetDetailItem(itemId: widget.idItem));
           }
         },
         child: BlocBuilder<DetailItemBloc, DetailItemState>(
@@ -68,7 +77,10 @@ class _DetailItemPageState extends State<DetailItemPage> {
                               CachedNetworkImage(
                                 imageUrl: state.item?.image ?? "",
                               ),
-                              Text(state.item?.name ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+                              Text(state.item?.name ?? "",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0)),
                               Text('Rp.${state.item?.price.toString() ?? ""}'),
                             ],
                           ),
@@ -78,13 +90,19 @@ class _DetailItemPageState extends State<DetailItemPage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Category", style: TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Category",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text(state.item?.category ?? ""),
                               const SizedBox(height: 10),
-                              const Text("Description", style: TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Description",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text(state.item?.description ?? ""),
                               const SizedBox(height: 10),
-                              const Text("Stock", style: TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Stock",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text(state.item?.quantity.toString() ?? "")
                             ],
                           ),
@@ -122,8 +140,10 @@ class _DetailItemPageState extends State<DetailItemPage> {
                       Expanded(
                         child: FilledButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return CheckoutPage(item: state.item ?? ItemModel.empty);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return CheckoutPage(
+                                  item: state.item ?? ItemModel.empty);
                             }));
                           },
                           child: const Text("Buy Now"),
@@ -139,5 +159,4 @@ class _DetailItemPageState extends State<DetailItemPage> {
       ),
     );
   }
-
 }

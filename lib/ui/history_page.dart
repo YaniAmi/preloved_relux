@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kopma/data/model/transaction/transaction_model.dart';
+import 'package:prelovedrelux/data/model/transaction/transaction_model.dart';
 
 import '../data/datasource/network/firebase_transaction_datasource.dart';
 
 class HistoryPage extends StatelessWidget {
-  final FirebaseTranscationDataSource _dataSource = FirebaseTranscationDataSource();
+  final FirebaseTranscationDataSource _dataSource =
+      FirebaseTranscationDataSource();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,9 @@ class HistoryPage extends StatelessWidget {
                           width: 100,
                           height: 100,
                           color: Colors.grey[300],
-                          child: Center(child: Image.network(transaction.itemImage, fit: BoxFit.cover)),
+                          child: Center(
+                              child: Image.network(transaction.itemImage,
+                                  fit: BoxFit.cover)),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -66,7 +69,9 @@ class HistoryPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 transaction.itemName,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0),
                               ),
                               Text('Seller: ${transaction.sellerName}'),
                               Text('Date: ${transaction.dateTime}'),
@@ -75,7 +80,6 @@ class HistoryPage extends StatelessWidget {
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),

@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kopma/bloc/detail_item_bloc/detail_item_bloc.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/bloc/detail_item_bloc/detail_item_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 import '../datasource/item_repository.dart';
 import 'local/local_cart_datasource.dart';
 import 'network/firebase_item_datasource.dart';
@@ -90,9 +90,11 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  Future<bool> updateItemQuantity(String item, String itemIdFirebase, int newQTY) async {
+  Future<bool> updateItemQuantity(
+      String item, String itemIdFirebase, int newQTY) async {
     try {
-      return await _localCartDataSource.updateItemQuantity(item, itemIdFirebase, newQTY);
+      return await _localCartDataSource.updateItemQuantity(
+          item, itemIdFirebase, newQTY);
     } catch (e) {
       log(e.toString());
       rethrow;

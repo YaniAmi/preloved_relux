@@ -1,4 +1,4 @@
-package com.example.kopma
+package com.example.prelovedrelux
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -48,7 +48,8 @@ class ItemEntity extends Equatable {
 
   static ItemEntity fromDocument(Map<String, dynamic> doc) {
     return ItemEntity(
-      id: doc['id'] as String,
+      // id: doc['id'] as String ?? '',
+      id: doc['id'] as String? ?? '',
       name: doc['name'] as String,
       image: doc['image'] as String,
       category: doc['category'] as String,
@@ -65,19 +66,19 @@ class ItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    name,
-    image,
-    category,
-    description,
-    quantity,
-    price,
-    sellerId,
-    sellerName,
-    sellerEmail,
-    sellerAddress,
-    sellerImage
-  ];
+        id,
+        name,
+        image,
+        category,
+        description,
+        quantity,
+        price,
+        sellerId,
+        sellerName,
+        sellerEmail,
+        sellerAddress,
+        sellerImage
+      ];
 
   @override
   String toString() {

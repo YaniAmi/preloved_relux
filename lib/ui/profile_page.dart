@@ -1,9 +1,9 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kopma/bloc/user_bloc/user_bloc.dart';
-import 'package:kopma/data/model/user/user_model.dart';
-import 'package:kopma/ui/component/text_field.dart';
+import 'package:prelovedrelux/bloc/user_bloc/user_bloc.dart';
+import 'package:prelovedrelux/data/model/user/user_model.dart';
+import 'package:prelovedrelux/ui/component/text_field.dart';
 import 'dart:developer';
 
 import '../data/datasource/shared_preferences_service.dart';
@@ -44,9 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
               actions: [
                 DisplayNameChangedAction((context, oldName, newName) {
                   setState(() {
-                    context.read<UserBloc>().add(SetUserData(
-                        user: user.copyWith(
-                            name: newName)));
+                    context
+                        .read<UserBloc>()
+                        .add(SetUserData(user: user.copyWith(name: newName)));
                   });
                 }),
                 SignedOutAction((context) {
@@ -103,16 +103,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                       return null;
                     }),
-                ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        context.read<UserBloc>().add(SetUserData(
-                            user: user.copyWith(
-                                address: addressController.text)));
-                      });
-                    },
-                    icon: const Icon(Icons.save),
-                    label: const Text("Save"))
+                // ElevatedButton.icon(
+                //     onPressed: () {
+                //       setState(() {
+                //         context.read<UserBloc>().add(SetUserData(
+                //             user: user.copyWith(
+                //                 address: addressController.text)));
+                //       });
+                //     },
+                //     icon: const Icon(Icons.save),
+                //     label: const Text("Save"))
               ],
             );
           },

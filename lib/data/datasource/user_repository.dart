@@ -1,4 +1,4 @@
-import 'package:kopma/data/model/user/user_model.dart';
+import 'package:prelovedrelux/data/model/user/user_model.dart';
 
 abstract class UserRepository {
   Future<void> setUserData(UserModel user);

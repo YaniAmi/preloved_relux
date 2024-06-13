@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kopma/data/model/user/user_entity.dart';
+import 'package:prelovedrelux/data/model/user/user_entity.dart';
 
 class UserModel extends Equatable {
   final String id;
@@ -9,15 +9,13 @@ class UserModel extends Equatable {
   final String? address;
   final int? balance;
 
-
-  const UserModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    this.image,
-    this.address,
-    this.balance
-  });
+  const UserModel(
+      {required this.id,
+      required this.name,
+      required this.email,
+      this.image,
+      this.address,
+      this.balance});
 
   /// Empty user which represents an unauthenticated user.
   static const empty = UserModel(
@@ -72,8 +70,7 @@ class UserModel extends Equatable {
         email: entity.email,
         image: entity.image,
         address: entity.address,
-        balance: entity.balance
-    );
+        balance: entity.balance);
   }
 
   @override

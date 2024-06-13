@@ -2,10 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:kopma/data/model/item/item_entity.dart';
-import 'package:kopma/data/model/item/item_model.dart';
-import 'package:kopma/data/model/transaction/transaction_model.dart';
-import 'package:kopma/data/model/user/user_model.dart';
+import 'package:prelovedrelux/data/model/item/item_entity.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
+import 'package:prelovedrelux/data/model/transaction/transaction_model.dart';
+import 'package:prelovedrelux/data/model/user/user_model.dart';
 import '../../../di/service_locator.dart';
 import '../../model/user/user_entity.dart';
 import '../shared_preferences_service.dart';
@@ -16,21 +16,21 @@ class FirebaseItemDataSource {
   final itemsStorage = FirebaseStorage.instance.ref().child('/items');
   final sharedPrefService = serviceLocator<SharedPreferencesService>();
   final transactionCollection =
-  FirebaseFirestore.instance.collection('transaction');
+      FirebaseFirestore.instance.collection('transaction');
 
   Future<bool> postItem(ItemModel item) async {
     try {
       final user = await usersCollection.doc(sharedPrefService.uid).get().then(
-              (value) =>
+          (value) =>
               UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
       if (user.address != null && user.name.isNotEmpty) {
         String id = itemsCollection.doc().id;
         return await itemsCollection
             .doc(id)
             .set(item
-            .toEntity(id, user.id, user.name, user.email, user.address!,
-            user.image)
-            .toDocument())
+                .toEntity(id, user.id, user.name, user.email, user.address!,
+                    user.image)
+                .toDocument())
             .then((value) => true);
       } else {
         return false;
@@ -40,7 +40,6 @@ class FirebaseItemDataSource {
       rethrow;
     }
   }
-
 
   Future<ItemModel> getDetailItem(String id) async {
     try {
@@ -73,17 +72,17 @@ class FirebaseItemDataSource {
           .doc(sharedPrefService.uid)
           .get()
           .then((value) =>
-          UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
+              UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
 
       if ((item.quantity - quantity) >= 0) {
         int totalPrice = quantity * item.price;
         int userBalance = user.balance ?? 0;
 
         if (userBalance >= totalPrice) {
-          await itemsCollection.doc(item.id).update(
-              item.copyWith(quantity: item.quantity - quantity)
+          await itemsCollection.doc(item.id).update(item
+              .copyWith(quantity: item.quantity - quantity)
               .toEntity(itemId, item.sellerId!, item.sellerName!,
-              item.sellerEmail!, item.sellerAddress!, item.sellerImage)
+                  item.sellerEmail!, item.sellerAddress!, item.sellerImage)
               .toDocument());
 
           await usersCollection.doc(user.id).update(user
@@ -92,29 +91,29 @@ class FirebaseItemDataSource {
               .toDocument());
 
           String id = transactionCollection.doc().id;
-          if(user.address != null || user.address.toString().isNotEmpty) {
+          if (user.address != null || user.address.toString().isNotEmpty) {
             return await transactionCollection
                 .doc(id)
                 .set(TransactionModel(
-                id: id,
-                dateTime: DateTime.now().toUtc(),
-                itemId: itemId,
-                itemName: item.name,
-                itemImage: item.image,
-                itemQuantity: quantity,
-                itemPrice: totalPrice,
-                buyerId: user.id,
-                buyerName: user.name,
-                buyerEmail: user.email,
-                buyerAddress: user.address!,
-                buyerMoney: userBalance,
-                sellerId: item.sellerId!,
-                sellerName: item.sellerName!,
-                sellerEmail: item.sellerEmail!,
-                sellerAddress: item.sellerAddress!,
-                sellerImage: item.sellerImage)
-                .toEntity()
-                .toDocument())
+                        id: id,
+                        dateTime: DateTime.now().toUtc(),
+                        itemId: itemId,
+                        itemName: item.name,
+                        itemImage: item.image,
+                        itemQuantity: quantity,
+                        itemPrice: totalPrice,
+                        buyerId: user.id,
+                        buyerName: user.name,
+                        buyerEmail: user.email,
+                        buyerAddress: user.address!,
+                        buyerMoney: userBalance,
+                        sellerId: item.sellerId!,
+                        sellerName: item.sellerName!,
+                        sellerEmail: item.sellerEmail!,
+                        sellerAddress: item.sellerAddress!,
+                        sellerImage: item.sellerImage)
+                    .toEntity()
+                    .toDocument())
                 .then((value) => true);
           } else {
             throw Exception('Can\'t ship without an address! Add it now.');
@@ -140,7 +139,7 @@ class FirebaseItemDataSource {
   Future<String> uploadImage(File file, String fileName) async {
     try {
       final TaskSnapshot snapshot =
-      await itemsStorage.child(fileName).putFile(file);
+          await itemsStorage.child(fileName).putFile(file);
       final downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {

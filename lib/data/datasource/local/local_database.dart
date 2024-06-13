@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:kopma/data/model/cart/cart_collection.dart';
+import 'package:prelovedrelux/data/model/cart/cart_collection.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// A class representing a local database.
@@ -12,7 +12,9 @@ class LocalDatabase {
   /// Returns the initialized Isar database instance.
   ///
   /// Throws an [IsarError] if the database has not been initialized.
-  Isar get db => _isInitialized ? _isar : throw IsarError('Isar has not been initialized.');
+  Isar get db => _isInitialized
+      ? _isar
+      : throw IsarError('Isar has not been initialized.');
 
   /// Initializes the Isar database.
   ///

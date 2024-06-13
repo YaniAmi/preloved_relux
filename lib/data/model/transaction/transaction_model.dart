@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kopma/data/model/transaction/transaction_entity.dart';
+import 'package:prelovedrelux/data/model/transaction/transaction_entity.dart';
 
 class TransactionModel extends Equatable {
   final String id;
@@ -154,22 +154,22 @@ class TransactionModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    dateTime,
-    itemId,
-    itemName,
-    itemImage,
-    itemQuantity,
-    itemPrice,
-    buyerId,
-    buyerName,
-    buyerEmail,
-    buyerAddress,
-    buyerMoney,
-    sellerId,
-    sellerName,
-    sellerEmail,
-    sellerAddress,
-    sellerImage,
-  ];
+        id,
+        dateTime,
+        itemId,
+        itemName,
+        itemImage,
+        itemQuantity,
+        itemPrice,
+        buyerId,
+        buyerName,
+        buyerEmail,
+        buyerAddress,
+        buyerMoney,
+        sellerId,
+        sellerName,
+        sellerEmail,
+        sellerAddress,
+        sellerImage,
+      ];
 }

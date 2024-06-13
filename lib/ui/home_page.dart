@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kopma/bloc/item_bloc/item_bloc.dart';
-import 'package:kopma/data/model/item/item_entity.dart';
-import 'package:kopma/ui/detail_item_page.dart';
-import 'package:kopma/ui/post_item_page.dart';
+import 'package:prelovedrelux/bloc/item_bloc/item_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_entity.dart';
+import 'package:prelovedrelux/ui/detail_item_page.dart';
+import 'package:prelovedrelux/ui/post_item_page.dart';
 import '../data/model/item/item_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocListener<ItemBloc, ItemState>(
         listener: (context, state) {
-          if(state is UploadItemSuccess) {
+          if (state is UploadItemSuccess) {
             context.read<ItemBloc>().add(const GetListItems(query: ""));
           }
         },
@@ -55,9 +55,7 @@ class _HomePageState extends State<HomePage> {
                 }
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.6
-                  ),
+                      crossAxisCount: 2, childAspectRatio: 0.6),
                   itemCount: snapshot.docs.length,
                   itemBuilder: (context, index) {
                     // if we reached the end of the currently obtained items, we try to
@@ -70,7 +68,9 @@ class _HomePageState extends State<HomePage> {
 
                     final item = snapshot.docs[index].data();
 
-                    return ItemWidget(item: ItemModel.fromEntity(ItemEntity.fromDocument(item)));
+                    return ItemWidget(
+                        item: ItemModel.fromEntity(
+                            ItemEntity.fromDocument(item)));
                   },
                 );
               },

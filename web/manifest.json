@@ -1,11 +1,11 @@
 {
-    "name": "kopma",
-    "short_name": "kopma",
+    "name": "prelovedrelux",
+    "short_name": "prelovedrelux",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "kopmaaaa",
+    "description": "prelovedrelux",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

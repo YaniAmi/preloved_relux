@@ -2,8 +2,8 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kopma/bloc/user_bloc/user_bloc.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/bloc/user_bloc/user_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 
 import '../bloc/detail_item_bloc/detail_item_bloc.dart';
 
@@ -24,8 +24,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     setState(() {
       if (_quantity < widget.item.quantity) {
         _quantity += 1;
-        _totalPrice =
-            _quantity * widget.item.price;
+        _totalPrice = _quantity * widget.item.price;
       }
     });
   }
@@ -34,8 +33,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     setState(() {
       if (_quantity > 1) {
         _quantity -= 1;
-        _totalPrice =
-            _quantity * widget.item.price;
+        _totalPrice = _quantity * widget.item.price;
       }
     });
   }
@@ -169,11 +167,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           onPressed: () {
                             setState(() {
                               context.read<DetailItemBloc>().add(
-                                BuyItem(
-                                  itemId: widget.item.id!,
-                                  quantity: _quantity,
-                                ),
-                              );
+                                    BuyItem(
+                                      itemId: widget.item.id!,
+                                      quantity: _quantity,
+                                    ),
+                                  );
                             });
                           },
                           child: const Text("Pay Now"),

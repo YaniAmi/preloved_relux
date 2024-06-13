@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kopma/bloc/detail_item_bloc/detail_item_bloc.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/bloc/detail_item_bloc/detail_item_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 
 abstract class ItemRepository {
   Query<Map<String, dynamic>> getListItem(String? query);
 
-  Future<ItemModel>getDetailItem(String id);
+  Future<ItemModel> getDetailItem(String id);
 
   Future<String> uploadImage(File file, String fileName);
 
@@ -18,7 +18,8 @@ abstract class ItemRepository {
 
   Future<bool> addItemToCart(ItemModel item);
 
-  Future<bool> updateItemQuantity(String item, String itemIdFirebase, int newQTY);
+  Future<bool> updateItemQuantity(
+      String item, String itemIdFirebase, int newQTY);
 
   Future<bool> deleteItemFromCart(String itemId);
 

@@ -26,7 +26,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
     on<UploadImage>((event, emit) async {
       try {
-        String imageUrl = await itemRepository.uploadImage(event.file, event.fileName);
+        String imageUrl =
+            await itemRepository.uploadImage(event.file, event.fileName);
         log(imageUrl);
         emit(ItemState.successUploadImage(imageUrl));
       } catch (e) {
@@ -37,7 +38,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
     on<GetListItems>((event, emit) {
       try {
-        Query<Map<String, dynamic>> listItem = itemRepository.getListItem(event.query);
+        Query<Map<String, dynamic>> listItem =
+            itemRepository.getListItem(event.query);
         emit(GetListItemSuccess(listItem));
       } catch (e) {
         log(e.toString());

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 import 'dart:developer';
 
 import '../../data/datasource/item_repository.dart';
@@ -11,12 +11,13 @@ part 'detail_item_state.dart';
 class DetailItemBloc extends Bloc<DetailItemEvent, DetailItemState> {
   final ItemRepository itemRepository;
 
-  DetailItemBloc({required this.itemRepository}) : super(const DetailItemState.initial()) {
+  DetailItemBloc({required this.itemRepository})
+      : super(const DetailItemState.initial()) {
     on<GetDetailItem>((event, emit) async {
       try {
         emit(const DetailItemState.loading());
         final item = await itemRepository.getDetailItem(event.itemId);
-        if(item == ItemModel.empty) {
+        if (item == ItemModel.empty) {
           emit(const DetailItemState.empty());
         } else {
           emit(DetailItemState.success(item));
@@ -30,7 +31,8 @@ class DetailItemBloc extends Bloc<DetailItemEvent, DetailItemState> {
     on<BuyItem>((event, emit) async {
       try {
         emit(const BuyItemLoading.empty());
-        final result = await itemRepository.buyItem(event.itemId, event.quantity);
+        final result =
+            await itemRepository.buyItem(event.itemId, event.quantity);
         emit(BuyItemSuccess(result));
       } catch (e) {
         log(e.toString());

@@ -3,9 +3,9 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-import 'package:kopma/data/model/cart/cart_collection.dart';
-import 'package:kopma/data/model/item/item_model.dart';
-import 'package:kopma/ui/cart_page.dart';
+import 'package:prelovedrelux/data/model/cart/cart_collection.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
+import 'package:prelovedrelux/ui/cart_page.dart';
 import '../../../di/service_locator.dart';
 import '../../model/item/item_entity.dart';
 import '../../model/user/user_entity.dart';
@@ -29,9 +29,11 @@ class LocalCartDataSource {
       final db = localDatabase.db;
 
       // Check if the item already exists in the cart
-      var existingItems = await db.cartCollections.filter().itemIdEqualTo(item.id).findAll();
+      var existingItems =
+          await db.cartCollections.filter().itemIdEqualTo(item.id).findAll();
       if (existingItems.isNotEmpty) {
-        throw ItemAlreadyExistsException("Item with ID ${item.id} already exists in the cart.");
+        throw ItemAlreadyExistsException(
+            "Item with ID ${item.id} already exists in the cart.");
       }
 
       CartCollection cartCollection = CartCollection(
@@ -61,9 +63,8 @@ class LocalCartDataSource {
   Future<List<ItemModel>> getListItemFromCart() async {
     try {
       final db = localDatabase.db;
-      return await db.cartCollections.where().findAll().then((value) =>
-          value.map((item) =>
-              ItemModel(
+      return await db.cartCollections.where().findAll().then((value) => value
+          .map((item) => ItemModel(
                 id: item.id.toString(),
                 itemId: item.itemId,
                 name: item.name,
@@ -77,9 +78,8 @@ class LocalCartDataSource {
                 sellerEmail: item.sellerEmail,
                 sellerAddress: item.sellerAddress,
                 sellerImage: item.sellerImage,
-              )
-          ).toList()
-      );
+              ))
+          .toList());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -97,7 +97,8 @@ class LocalCartDataSource {
     }
   }
 
-  Future<bool> updateItemQuantity(String? itemId, String itemIdFirebase, int newQuantity) async {
+  Future<bool> updateItemQuantity(
+      String? itemId, String itemIdFirebase, int newQuantity) async {
     int idItem = int.parse(itemId!);
     if (itemId == null) {
       log('Item ID is null');
@@ -105,7 +106,8 @@ class LocalCartDataSource {
     }
     try {
       final db = localDatabase.db;
-      final item = await db.cartCollections.filter().idEqualTo(idItem).findFirst();
+      final item =
+          await db.cartCollections.filter().idEqualTo(idItem).findFirst();
       if (item != null) {
         final updatedItem = CartCollection(
           id: idItem,
@@ -133,7 +135,8 @@ class LocalCartDataSource {
     }
   }
 
-  Future<bool> buyItemFromCart(BuildContext context, String isarID, String itemId, int quantity) async {
+  Future<bool> buyItemFromCart(
+      BuildContext context, String isarID, String itemId, int quantity) async {
     try {
       showDialog(
         context: context,
@@ -154,17 +157,22 @@ class LocalCartDataSource {
       await _firebaseItemDataSource.buyItem(itemId, quantity);
       deleteItemFromCart(isarID);
       Navigator.of(context).pop();
-      showOkAlertDialog(context: context, title: "Success", message: "Congrats! Your order is on its way!");
+      showOkAlertDialog(
+          context: context,
+          title: "Success",
+          message: "Congrats! Your order is on its way!");
       return true;
     } catch (e) {
       log(e.toString());
       Navigator.of(context).pop();
-      showOkAlertDialog(context: context, title: "Failed", message: e.toString());
+      showOkAlertDialog(
+          context: context, title: "Failed", message: e.toString());
       rethrow;
     }
   }
 
-  Future<bool> batchBuyItem(BuildContext context, List<ItemModel> cartItems, int totalPrice) async {
+  Future<bool> batchBuyItem(
+      BuildContext context, List<ItemModel> cartItems, int totalPrice) async {
     try {
       showDialog(
         context: context,
@@ -182,19 +190,21 @@ class LocalCartDataSource {
           );
         },
       );
-      UserModel user = await FirebaseItemDataSource().usersCollection
+      UserModel user = await FirebaseItemDataSource()
+          .usersCollection
           .doc(FirebaseItemDataSource().sharedPrefService.uid)
           .get()
           .then((value) =>
-          UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
+              UserModel.fromEntity(UserEntity.fromDocument(value.data()!)));
       int userBalance = user.balance ?? 0;
 
       if (userBalance >= totalPrice) {
         List<String> outOfStockItems = [];
         for (var cartItem in cartItems) {
           ItemModel item =
-          await FirebaseItemDataSource().getDetailItem(cartItem.itemId!);
-          if ((item.quantity - cartItem.quantity) >= 0) {} else {
+              await FirebaseItemDataSource().getDetailItem(cartItem.itemId!);
+          if ((item.quantity - cartItem.quantity) >= 0) {
+          } else {
             outOfStockItems.add(cartItem.name);
           }
         }
@@ -215,7 +225,7 @@ class LocalCartDataSource {
             context: context,
             title: "Out of Stock Item(s)",
             message:
-            "The following items are out of stock: ${outOfStockItems.join(', ')}",
+                "The following items are out of stock: ${outOfStockItems.join(', ')}",
           );
           return false;
         }
@@ -223,9 +233,7 @@ class LocalCartDataSource {
       } else {
         Navigator.of(context).pop();
         showOkAlertDialog(
-            context: context,
-            title: "Failed",
-            message: "Not enough balance!");
+            context: context, title: "Failed", message: "Not enough balance!");
         return false;
       }
     } catch (e) {
@@ -234,6 +242,4 @@ class LocalCartDataSource {
       rethrow;
     }
   }
-
-
 }

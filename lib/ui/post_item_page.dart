@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kopma/bloc/item_bloc/item_bloc.dart';
-import 'package:kopma/data/model/item/item_model.dart';
+import 'package:prelovedrelux/bloc/item_bloc/item_bloc.dart';
+import 'package:prelovedrelux/data/model/item/item_model.dart';
 import 'component/text_field.dart';
 
 class PostItemPage extends StatefulWidget {
@@ -21,24 +21,8 @@ class _PostItemPageState extends State<PostItemPage> {
   final descriptionController = TextEditingController();
   final quantityController = TextEditingController();
   final priceController = TextEditingController();
-  String categoriesValue = 'Books';
-  final categories = [
-    'Books',
-    'Business & Industrial',
-    'Clothing, Shoes & Accessories',
-    'Collectibles',
-    'Consumer Electronics',
-    'Crafts',
-    'Dolls & Bears',
-    'Home & Garden',
-    'Motors',
-    'Pet Supplies',
-    'Sporting Goods',
-    'Sports Mem, Cards & Fan Shop',
-    'Toys & Hobbies',
-    'Antiques',
-    'Computers/Tablets & Networking'
-  ];
+  String categoriesValue = 'bag';
+  final categories = ['bag', 'electronic', 'accesoris', 'clothes'];
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +39,7 @@ class _PostItemPageState extends State<PostItemPage> {
               showOkAlertDialog(
                   context: context,
                   title: "Success",
-                  message:
-                  "Your item is live and ready to sell.");
+                  message: "Your item is live and ready to sell.");
               setState(() {
                 nameController.text = "";
                 descriptionController.text = "";
@@ -68,7 +51,7 @@ class _PostItemPageState extends State<PostItemPage> {
                   context: context,
                   title: "Error",
                   message:
-                  "Please complete your profile information, including your name and address.");
+                      "Please complete your profile information, including your name and address.");
             }
           }
         },
@@ -87,7 +70,7 @@ class _PostItemPageState extends State<PostItemPage> {
               IconButton(
                   onPressed: () async {
                     final XFile? images =
-                    await picker.pickImage(source: ImageSource.gallery);
+                        await picker.pickImage(source: ImageSource.gallery);
                     if (context.mounted) {
                       context.read<ItemBloc>().add(UploadImage(
                           file: File(images!.path), fileName: images.name));
@@ -160,7 +143,7 @@ class _PostItemPageState extends State<PostItemPage> {
                       obscureText: false,
                       textInputAction: TextInputAction.done,
                       keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       validator: (val) {
                         if (val!.isEmpty) {
                           return 'Please fill in this field';

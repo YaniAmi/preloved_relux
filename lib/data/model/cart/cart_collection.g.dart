@@ -170,6 +170,7 @@ CartCollection _cartCollectionDeserialize(
   final object = CartCollection(
     category: reader.readString(offsets[0]),
     description: reader.readString(offsets[1]),
+    id: id,
     image: reader.readString(offsets[2]),
     itemId: reader.readStringOrNull(offsets[3]),
     name: reader.readString(offsets[4]),
@@ -181,7 +182,6 @@ CartCollection _cartCollectionDeserialize(
     sellerImage: reader.readStringOrNull(offsets[10]),
     sellerName: reader.readStringOrNull(offsets[11]),
   );
-  object.id = id;
   return object;
 }
 
