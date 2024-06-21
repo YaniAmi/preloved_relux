@@ -103,16 +103,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                       return null;
                     }),
-                // ElevatedButton.icon(
-                //     onPressed: () {
-                //       setState(() {
-                //         context.read<UserBloc>().add(SetUserData(
-                //             user: user.copyWith(
-                //                 address: addressController.text)));
-                //       });
-                //     },
-                //     icon: const Icon(Icons.save),
-                //     label: const Text("Save"))
+                ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        context.read<UserBloc>().add(SetUserData(
+                            user: user.copyWith(
+                                address: addressController.text)));
+                      });
+                    },
+                    icon: const Icon(Icons.save),
+                    label: const Text("Save"))
               ],
             );
           },
